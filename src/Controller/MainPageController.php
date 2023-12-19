@@ -26,7 +26,7 @@ class MainPageController extends AbstractController
         #$pagerfanta->setCurrentPage(1);
 
         return $this->render('main_page/index.html.twig', [
-            'products' => $products(),
+            'products' => $products,
         ]);
     }
 }
