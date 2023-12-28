@@ -5,28 +5,28 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Product;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-#use Pagerfanta\Adapter\ArrayAdapter;
-#use Pagerfanta\Pagerfanta;
+use Knp\Component\Pager\PaginatorInterface;
 
 class MainPageController extends AbstractController
 {
     #[Route('/', name: 'main_page')]
-    public function showAllProducts(EntityManagerInterface $entityManager): Response
+    public function showAllProducts(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
     {
         $productsRepository = $entityManager->getRepository(Product::class);
         $products = $productsRepository->findAll();
 
-        // Пагинация
-        #$adapter = new ArrayAdapter($products);
-        #$pagerfanta = new Pagerfanta($adapter);
-        #$maxPerPage = 10;
-        #$pagerfanta->setMaxPerPage($maxPerPage);
-        #$pagerfanta->setCurrentPage(1);
+        $pagination = $paginator->paginate(
+            $productsRepository->paginationQuery(),
+            $request->query->get('page', 1),
+            2
+        );
 
         return $this->render('main_page/index.html.twig', [
-            'products' => $products,
+            'pagination' => $pagination
         ]);
     }
 }

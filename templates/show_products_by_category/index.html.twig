@@ -6,8 +6,8 @@
 <style>
 </style>
 
-<div class="example-wrapper">
-    <h1 style="text-align:center;">Товары из категории: {{category.getName()}}</h1>
+<div>
+    <h1>Товары из категории: {{category.getName()}}</h1>
     <a style="margin-left:5px;" href="/category"><--Назад</a>
     {% set counter = 1 %}
     <table class="exampleTable">
@@ -28,7 +28,7 @@
                 {{ product.getName() }}
             </th>
             <th> 
-                {{ product.getCategoryId().getName() }}
+                {{ product.getCategory().getName() }}
             </th>
             </tr>
             {% set counter = counter + 1 %}

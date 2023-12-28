@@ -7,9 +7,10 @@
    
 </style>
 
-<div class="example-wrapper">
+
+<div>
     {% set counter = 1 %}
-    <h1 style="text-align:center;">Главная страница</h1>
+    <h1>Главная страница</h1>
     Список всех товаров:
     <table class="exampleTable">
   <thead>
@@ -19,7 +20,7 @@
         <th scope="col">Категория</th>
     </tr>
   </thead>
-        {% for product in products %}
+        {% for product in pagination %}
             <tr>
             <th>
             {{ counter }}
@@ -29,11 +30,12 @@
                 {{ product.getName() }}
             </th>
             <th> 
-                {{ product.getCategoryId().getName() }}
+                {{ product.getCategory().getName() }}
             </th>
             </tr>
             {% set counter = counter + 1 %}
         {% endfor %}
 </table>
+    {{knp_pagination_render(pagination)}}
 </div>
 {% endblock %}

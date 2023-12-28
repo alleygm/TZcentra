@@ -18,7 +18,7 @@ class ShowProductsByCategoryController extends AbstractController
         $category = $categoryRepository->findOneById($id);
 
         $productRepository = $entityManager->getRepository(Product::class);
-        $product = $productRepository->findBy(['category_id' => $id]);
+        $product = $productRepository->findBy(['category' => $id]);
 
         return $this->render('show_products_by_category/index.html.twig', [
             'products' => $product, 'category' => $category

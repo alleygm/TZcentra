@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Страница Категорий
+{% endblock %}
+
+{% block body %}
+	<div>
+		{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+			<h1>Требуется авторизация</h1>
+			<p>
+				Для доступа к запрашиваемой странице требуется авторизоваться. Перейдите на страницу
+				<a href="{{ path('app_login') }}">авторизации</a>.
+			</p>
+		{% elseif is_granted('IS_AUTHENTICATED_FULLY') and not is_granted('ROLE_ADMIN')%}
+			<h1>Требуется дополнительная роль</h1>
+
+			<p>
+				Для доступа к запрашиваемой странице требуется дополнительная роль. Обратитесь к системному администратору или
+				<a href="{{ path('main_page') }}">вернитесь на главную страницу</a>.
+			</p>
+		{% else %}
+			<a class="adminLink" href="/login">| Авторизоваться |</a>
+		{% endif %}
+		<div>
+		{% endblock %}

@@ -35,6 +35,9 @@
             "ref": "b131e6cbfe1b898a508987851963fff485986285"
         }
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.3.0"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
@@ -296,6 +299,9 @@
             "./config/packages/web_profiler.yaml",
             "./config/routes/web_profiler.yaml"
         ]
+    },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.16.0"
     },
     "twig/extra-bundle": {
         "version": "v3.8.0"

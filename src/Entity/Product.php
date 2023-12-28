@@ -16,9 +16,9 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity:"Category")]
-    #[ORM\JoinColumn(nullable: true, name:"category_id", referencedColumnName:"id")]
-    private ?Category $category_id = null;
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Category", inversedBy: "products")]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id")]
+    private $category;
 
     public function getId(): ?int
     {
@@ -36,15 +36,14 @@ class Product
 
         return $this;
     }
-
-    public function getCategoryId(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->category_id;
+        return $this->category;
     }
 
-    public function setCategoryId(?Category $category_id): static
+    public function setCategory(?Category $category): static
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
 
         return $this;
     }

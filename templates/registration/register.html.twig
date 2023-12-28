@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Регистрация
+{% endblock %}
+
+{% block body %}
+	<div class="form-wrapper">
+		<h1 style="text-align:center;">Регистрация</h1>
+
+		{{ form_errors(registrationForm) }}
+		<div style="text-align:center;">
+			{{ form_start(registrationForm) }}
+			Email
+			{{ form_row(registrationForm.Email, {
+
+        label: ' '
+        }) }}
+			Пароль
+			{{ form_row(registrationForm.plainPassword, {
+            label: ' '
+        }) }}
+			{{ form_row(registrationForm.agreeTerms, {label: 'Принять условия соглашения'}) }}
+
+			<button type="submit" class="btn">Зарегистрироваться</button>
+			{{ form_end(registrationForm) }}
+		</div>
+	</div>
+{% endblock %}

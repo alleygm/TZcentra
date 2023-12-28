@@ -1,71 +1,207 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-            {{ ux_controller_link_tags() }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{% block stylesheets %}
+			{{ ux_controller_link_tags() }}
+		{% endblock %}
 
-        {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body style="background-color: #CFCFCF;">
-    <div class="headerMenu">
-<a href="/">| Главная страница |</a>
-<a href="/category">| Категории |</a>
-<a class="adminLink" href="/admin">| Админ |</a> 
-</div>
-        {% block body %}{% endblock %}
-    </body>
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
+	</head>
+	<body class="gradient-background">
+		<div class="example-wrapper">
+			<div class="header">
+				<h1 class="logo">YouGreen</h1>
+				<nav class="main-nav">
+					<ul>
+						<li>
+							<a id="mainLink" href="/">Главная</a>
+						</li>
+						<li>
+							<a id="categoryLink" href="/category" >Категории</a>
+						</li>
+						<div class="dropDownMenu">
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<a>Пользователь</a>
+								<div class="dropDownMenu-content">
+									<a href="/user/profile">Профиль</a>
+									<br>
+									{% if is_granted('ROLE_ADMIN') %}
+										<a href="/admin">Админ</a>
+										<br>
+									{% endif %}
+									<a href="/logout">Выйти</a>
+								</div>
+							{% else %}
+								<a id="loginLink" href="/login">Авторизация</a>
+							{% endif %}
+						</div>
+					</ul>
+				</nav>
+			</div>
+			{% block body %}{% endblock %}
+		</div>
+	</body>
 </html>
-    <style>
-    .example-wrapper 
-    { 
-        margin: 1em auto; 
-        max-width: 800px; width: 95%; 
-        font: 18px/1.5 sans-serif; 
-        border-style: double; 
-        border-width: 2px;
-    }
-    .example-wrapper code 
-    { 
-        background: #F5F5F5; 
-        padding: 2px 6px; 
-    }
-    .headerMenu 
-    {
-        margin: 1em auto; 
-        max-width: 800px; 
-        width: 95%; 
-        font: 18px/1.5 sans-serif;
-    }
-    .headerMenu .adminLink 
-    {
-        float: right; 
-    }
-    .exampleTable 
-        {
-            width:100%;
-            text-align:center;
-        }
-    .exampleTable thead th 
-        {
-            font-weight: bold;
-            background-color: #3f87a6;
-            color: #fff;
-            padding-left: 15px;
-            border-style: double;
-        }
 
-        .exampleTable th 
-        {
-            font-weight: normal;
-            padding-left: 15px;
-            border-style: double;
-        }
+<script>
+var currentURL = window.location.href;
+var color = '#9c9c9c';
+var baseURL = window.location.origin;
+if (currentURL.includes("category")) 
+	{
+		document.getElementById('categoryLink').style.backgroundColor = color;
+}
+else if(currentURL === baseURL+"/")	
+{ 
+		document.getElementById('mainLink').style.backgroundColor = color;
+}
+else if(currentURL.includes("login"))	
+{ 
+		document.getElementById('loginLink').style.backgroundColor = color;
+}
+</script>
+<style>
+	.dropDownMenu-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		width: 155px;
+		box-shadow: 0 0 10px rgba(32, 36, 49, 0.5);
+		border: 2px solid #ddd;
+		border-radius: 15px;
+		text-align: center; /* Выравнивание по центру */
+	}
+	.dropDownMenu-content a {}
+	.dropDownMenu a:last-child {
+		border-bottom: none; /* Убрать границу снизу у последнего элемента */
+	}
 
+	.dropDownMenu:hover .dropDownMenu-content {
+		display: block;
+	}
 
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 20px;
+		border-bottom: 2px solid black;
+
+	}
+	.logo {
+		color: #333333;
+		font-size: 20px;
+		padding: 5px;
+	}
+
+	.main-nav ul {
+		list-style-type: none;
+		padding: 5px;
+		margin: 0;
+		display: flex;
+		background-color: rgba(255, 255, 255, 0.3);
+		box-shadow: 0 0 10px rgba(32, 36, 49, 1);
+		border-radius: 15px;
+	}
+	.main-nav li {
+		margin-right: 20px;
+	}
+	.main-nav a {
+		text-decoration: none;
+		color: #333333;
+		padding: 5px; /* добавляем отступы, чтобы увеличить область нажатия */
+		border-radius: 15px; /* Добавляем скругленные углы для кнопки */
+		transition: background-color 0.5s ease;
+	}
+	.main-nav a:hover {
+		background-color: #9c9c9c; /* Новый цвет фона при наведении */
+	}
+	.example-wrapper {
+		margin: 0 auto 1em;
+		max-width: 800px;
+		width: 95%;
+		height: 95%;
+		font: 18px / 1.5 sans-serif;
+		border-radius: 25px;
+		background-color: rgba(254, 253, 254, 0.9);
+		color: #1d253b;
+		box-shadow: 0 0 10px rgba(7, 7, 7, 15.15);
+	}
+	.example-wrapper h1 {
+		text-align: center;
+	}
+	.gradient-background {
+		margin: 20px;
+		background: linear-gradient(#5e678a, #343b4e, #1c1f28); /* Измените цвета на те, которые вам нравятся */
+		/* Дополнительные свойства (высота, ширина, отступы и т.д.) */
+		height: 100vh; /* высота элемента */
+		width: 100%; /* ширина элемента */
+	}
+	.headerMenu {
+		margin: 1em auto;
+		max-width: 800px;
+		width: 95%;
+		font: 18px / 1.5 sans-serif;
+	}
+	.headerMenu .adminLink {
+		float: right;
+	}
+	.exampleTable {
+		width: 100%;
+		text-align: center;
+	}
+	.exampleTable thead th {
+		font-weight: bold;
+		background-color: #ecf9fc;
+		color: #1d253b;
+		padding-left: 15px;
+		border-style: double;
+	}
+
+	.exampleTable th {
+		font-weight: normal;
+		padding-left: 15px;
+		border-style: double;
+	}
+
+	.form-wrapper {
+		margin: 0 auto 1em;
+		max-width: 500px;
+		width: 95%;
+		font: 18px / 1.5 sans-serif;
+		border-radius: 25px;
+		padding-bottom: 15px;
+		background-color: rgba(255, 255, 255, 0.5);
+		color: #1d253b;
+		box-shadow: 0 0 10px rgba(32, 36, 49, 10.15);
+	}
+	.form-wrapper h1 {
+		text-align: center;
+	}
+	.form-wrapper input {
+		text-align: center;
+		height: 20px;
+		border-radius: 15px;
+	}
+	.form-wrapper button {
+		background-color: rgba(255, 255, 255, 0.3);
+		border-radius: 15px;
+		margin: 10px;
+		padding: 6px;
+		font-size: 15px;
+		transition: background-color 0.5s ease;
+	}
+	.form-wrapper button:hover {
+		background-color: #888888; /* Новый цвет фона при наведении */
+	}
 </style>
