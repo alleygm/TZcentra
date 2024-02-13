@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<style>
+		.profile {
+			display: flex;
+			align-items: center;
+			border-radius: 5px;
+			overflow: hidden;
+			background-color: transparent;
+			width: 100%;
+			height: 100%;
+		}
+		.profile button {
+			width: 150px;
+		}
+		.profile-photo {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 5px;
+
+		}
+		.profile-photo img:hover {
+			background-color: #ffffff;
+			filter: brightness(70%);
+		}
+		.profile-photo img {
+			width: 150px;
+			height: 150px;
+			border-radius: 15px;
+			border: 2px solid;
+			object-fit: cover;
+			margin-bottom: 10px;
+		}
+
+		.profile-info {
+			flex: 2;
+			border-left: 2px solid;
+			padding-left: 10px;
+		}
+	</style>
+	<div class="second-wrapper">
+		<div class="profile">
+			<div class="profile-photo">
+				<label for="upload-photo">
+					<img id="user-photo" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Фото Пользователя">
+				</label>
+				<input type="file" id="upload-photo" style="display: none">
+				<button>Изменить данные</button>
+				<button>Удалить</button>
+			</div>
+			<div class="profile-info">
+				<h2>User Name</h2>
+				<p>Email:
+					{{user.Email }}</p>
+				<p>Location: City, Country</p>
+
+				<p>Роль:
+					{% for rol in user.roles %}
+						{{rol}};
+					{% endfor %}
+				</p>
+				<p>Дата регистрации: City, Country</p>
+				<p>Дата рождения: City, Country</p>
+				<p>Описание: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</div>
+		</div>
+	</div>
+	{{ form_errors(userForm) }}
+	{{ form_start(userForm) }}
+	{{ form_row(userForm.Email, { label: ' ' }) }}
+	{{ form_row(userForm.password, { label: ' ' }) }}
+	<ul>
+	<li> {{ form_label(userForm.roles) }} </li> 
+	</ul>
+	{{ form_end(userForm) }}
+</div>{% endblock %}

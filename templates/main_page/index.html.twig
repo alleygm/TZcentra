@@ -1,41 +1,41 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Главная страница{% endblock %}
-
 {% block body %}
-<style>
-   
-</style>
 
-
-<div>
-    {% set counter = 1 %}
-    <h1>Главная страница</h1>
-    Список всех товаров:
-    <table class="exampleTable">
-  <thead>
-    <tr>
-        <th scope="col">№</th>
-        <th scope="col">Наименование</th>
-        <th scope="col">Категория</th>
-    </tr>
-  </thead>
-        {% for product in pagination %}
-            <tr>
-            <th>
-            {{ counter }}
-            
-            </th>
-            <th> 
-                {{ product.getName() }}
-            </th>
-            <th> 
-                {{ product.getCategory().getName() }}
-            </th>
-            </tr>
-            {% set counter = counter + 1 %}
-        {% endfor %}
-</table>
-    {{knp_pagination_render(pagination)}}
-</div>
+	<style></style> 
+	<div class="second-wrapper">
+		<div>
+			{% set counter = 1 %}
+			<button onclick="getLocation()">Get Location</button>
+			<p id="location"></p>
+			<h1>Главная страница</h1>
+			<text>
+				Список всех товаров:</text>
+			<table class="exampleTable">
+				<thead>
+					<tr>
+						<th scope="col">№</th>
+						<th scope="col">Наименование</th>
+						<th scope="col">Категория</th>
+					</tr>
+				</thead>
+				{% for product in pagination %}
+					<tr>
+						<th>
+							{{ counter }}
+						</th>
+						<th>
+							{{ product.getName() }}
+						</th>
+						<th>
+							{{ product.getCategory().getName() }}
+						</th>
+					</tr>
+					{% set counter = counter + 1 %}
+				{% endfor %}
+			</table>
+			{{knp_pagination_render(pagination)}}
+		</div>
+	</div>
+	<script> getLocation();</script>
 {% endblock %}

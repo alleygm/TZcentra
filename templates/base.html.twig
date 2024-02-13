@@ -3,22 +3,20 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
-			{% endblock %}
+			{% block title %}Welcome!{% endblock %}
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		
 		{% block stylesheets %}
-			{{ ux_controller_link_tags() }}
+            {{ encore_entry_link_tags('app') }}
+		{% endblock %}
+		{% block javascripts %}
+        	{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 
-		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
-			{% endblock %}
-		{% endblock %}
 	</head>
 	<body class="gradient-background">
-		<div class="example-wrapper">
+		<div class="first-wrapper">
 			<div class="header">
 				<h1 class="logo">YouGreen</h1>
 				<nav class="main-nav">
@@ -27,13 +25,13 @@
 							<a id="mainLink" href="/">Главная</a>
 						</li>
 						<li>
-							<a id="categoryLink" href="/category" >Категории</a>
+							<a id="categoryLink" href="/category">Категории</a>
 						</li>
 						<div class="dropDownMenu">
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 								<a>Пользователь</a>
 								<div class="dropDownMenu-content">
-									<a href="/user/profile">Профиль</a>
+									<a href="/users/profile">Профиль</a>
 									<br>
 									{% if is_granted('ROLE_ADMIN') %}
 										<a href="/admin">Админ</a>
@@ -54,21 +52,17 @@
 </html>
 
 <script>
-var currentURL = window.location.href;
-var color = '#9c9c9c';
-var baseURL = window.location.origin;
-if (currentURL.includes("category")) 
-	{
+	var currentURL = window.location.href;
+	var color = '#9c9c9c';
+	var baseURL = window.location.origin;
+	if (currentURL.includes("category")) {
 		document.getElementById('categoryLink').style.backgroundColor = color;
-}
-else if(currentURL === baseURL+"/")	
-{ 
+	} else if (currentURL === baseURL + "/") {
 		document.getElementById('mainLink').style.backgroundColor = color;
-}
-else if(currentURL.includes("login"))	
-{ 
+	} else if (currentURL.includes("login")) {
 		document.getElementById('loginLink').style.backgroundColor = color;
-}
+	}
+	div
 </script>
 <style>
 	.dropDownMenu-content {
@@ -96,7 +90,6 @@ else if(currentURL.includes("login"))
 		align-items: center;
 		padding: 0 20px;
 		border-bottom: 2px solid black;
-
 	}
 	.logo {
 		color: #333333;
@@ -126,18 +119,18 @@ else if(currentURL.includes("login"))
 	.main-nav a:hover {
 		background-color: #9c9c9c; /* Новый цвет фона при наведении */
 	}
-	.example-wrapper {
+	.first-wrapper {
 		margin: 0 auto 1em;
 		max-width: 800px;
 		width: 95%;
 		height: 95%;
 		font: 18px / 1.5 sans-serif;
-		border-radius: 25px;
+		border-radius: 15px;
 		background-color: rgba(254, 253, 254, 0.9);
 		color: #1d253b;
-		box-shadow: 0 0 10px rgba(7, 7, 7, 15.15);
+		box-shadow: 0 0 10px rgba(7, 7, 7, 1);
 	}
-	.example-wrapper h1 {
+	.first-wrapper h1 {
 		text-align: center;
 	}
 	.gradient-background {
@@ -145,63 +138,62 @@ else if(currentURL.includes("login"))
 		background: linear-gradient(#5e678a, #343b4e, #1c1f28); /* Измените цвета на те, которые вам нравятся */
 		/* Дополнительные свойства (высота, ширина, отступы и т.д.) */
 		height: 100vh;
-		width: 100%; 
+		width: 100%;
 	}
-	.headerMenu {
-		margin: 1em auto;
-		max-width: 800px;
+
+	.second-wrapper {
+		margin: 20px auto;
 		width: 95%;
 		font: 18px / 1.5 sans-serif;
+		border-radius: 15px;
+		color: #1d253b;
+		box-shadow: 0 0 10px rgba(32, 36, 49, 1);
 	}
-	.headerMenu .adminLink {
-		float: right;
-	}
-	.exampleTable {
-		width: 100%;
+	.second-wrapper h1 {
+		margin:0px;
 		text-align: center;
+	}
+	.second-wrapper input {
+		text-align: center;
+		height: 20px;
+		border-radius: 15px;
+	}
+	.second-wrapper button {
+		border-radius: 15px;
+		background-color: rgba(254, 253, 254, 0.9);
+		box-shadow: 0 0 10px rgba(7, 7, 7, 0.25);
+		margin:5px;
+		padding: 5px;
+		border:none;
+		color: #1d253b;
+		font-size: 15px;
+		transition: background-color 0.5s ease;
+		cursor: pointer;
+	}
+	.second-wrapper button:hover {
+		background-color: #888888; /* Новый цвет фона при наведении */
+	}
+	
+	.exampleTable {
+		width: 95%;
+		text-align: center;
+		 margin: 0 auto;
+
+		 
 	}
 	.exampleTable thead th {
 		font-weight: bold;
 		background-color: #ecf9fc;
 		color: #1d253b;
-		padding-left: 15px;
-		border-style: double;
+		border-style: solid;
+		border-width: 1px;
+		border-radius: 10px;
 	}
 
 	.exampleTable th {
+		border-width: 1px;
 		font-weight: normal;
-		padding-left: 15px;
-		border-style: double;
-	}
-
-	.form-wrapper {
-		margin: 0 auto 1em;
-		max-width: 500px;
-		width: 95%;
-		font: 18px / 1.5 sans-serif;
-		border-radius: 25px;
-		padding-bottom: 15px;
-		background-color: rgba(255, 255, 255, 0.5);
-		color: #1d253b;
-		box-shadow: 0 0 10px rgba(32, 36, 49, 10.15);
-	}
-	.form-wrapper h1 {
-		text-align: center;
-	}
-	.form-wrapper input {
-		text-align: center;
-		height: 20px;
-		border-radius: 15px;
-	}
-	.form-wrapper button {
-		background-color: rgba(255, 255, 255, 0.3);
-		border-radius: 15px;
-		margin: 10px;
-		padding: 6px;
-		font-size: 15px;
-		transition: background-color 0.5s ease;
-	}
-	.form-wrapper button:hover {
-		background-color: #888888; /* Новый цвет фона при наведении */
+		border-style: solid;
+		border-radius: 10px;
 	}
 </style>

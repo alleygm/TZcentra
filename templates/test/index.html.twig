@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!
+{% endblock %}
+
+{% block body %}
+    <style>
+       /* Стили для модального окна */
+        .modal {
+            display: none; /* По умолчанию скрыто */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Цвет фона с прозрачностью */
+            justify-content: center; /* Центрирование по горизонтали */
+            align-items: center; /* Центрирование по вертикали */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            text-align: center;
+            max-width: 80%; /* Максимальная ширина содержимого */
+            box-sizing: border-box; /* Учитывать padding и border в общей ширине */
+        }
+        /* Кнопка закрытия модального окна */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="first-wrapper">
+	    <h1>Perfect World</h1>
+	    	<ul>
+	    		<div class="second-wrapper">
+	    			<button onclick="">Добавить персонажа</button>
+	    			<button onclick="">Удалить персонажа</button>
+	    		</div>
+	    		<button onclick="makeAjaxRequest()">Запустить пв</button>
+	    	</ul>
+                <button id="openModalButton">Открыть модальное окно</button>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="fileForm">
+            <label for="fileName">Название файла:</label><br>
+            <input type="text" id="fileName" name="fileName"><br>
+            <label for="login">Логин:</label><br>
+            <input type="text" id="login" name="login"><br>
+            <label for="password">Пароль:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <label for="nickname">Никнейм:</label><br>
+            <input type="text" id="nickname" name="nickname"><br>
+            <button type="button" form="fileForm" value="Submit" onclick="makeAjaxRequest()">Создать</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    // Получаем ссылки на элементы
+    var modal = document.getElementById('modal');
+    var openModalButton = document.getElementById('openModalButton');
+    var closeModalButton = document.querySelector('.close');
+
+    // Открываем модальное окно при клике на кнопку "Открыть модальное окно"
+    openModalButton.onclick = function() {
+        modal.style.display = "flex";
+    }
+
+    // Закрываем модальное окно при клике на кнопку закрытия
+    closeModalButton.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+
+	function makeAjaxRequest() {
+        var fileName = document.getElementById("fileName").value;
+        var login = document.getElementById("login").value;
+        var password = document.getElementById("password").value;
+        var nickname = document.getElementById("nickname").value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () 
+        {
+            if (xhr.readyState === XMLHttpRequest.DONE) 
+            {
+                if (xhr.status === 200) 
+                { 
+                    // Обрабатываем результат запроса здесь
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                } 
+                else 
+                { 
+                    // Обрабатываем ошибку запроса здесь
+                    console.log('Ошибка запроса');
+                }
+            }
+        };
+        var url = '/test/ajax?fileName=' + fileName + '&login=' + login + '&password=' + password + '&nickname=' + nickname;
+        xhr.open('GET', url, true);
+        xhr.send();
+    }
+
+</script>
+
+{% endblock %}

@@ -7,4 +7,18 @@ import './bootstrap.js';
  */
 import './styles/app.css'
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
+window.getLocation =function() {
+  // Если геолокация поддерживается браузером
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    document.getElementById("location").innerHTML = "Геолокация не поддерживается.";
+  }
+}
+function showPosition(position) 
+{
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+  document.getElementById("location").innerHTML = "Широта: " + lat + "<br>Долгота: " + lon;
+}
+

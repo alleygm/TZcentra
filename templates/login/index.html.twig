@@ -4,7 +4,7 @@
 {# ... #}
 
 {% block body %}
-	<div class="form-wrapper">
+	<div class="second-wrapper">
 		{% if error %}
 			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
@@ -20,8 +20,6 @@
 				<br>
 				<input
 				type="password" id="password" name="_password">
-
-
 				<input type="hidden" name="_target_path" value="/category"> 
 				<br>
 				<button type="submit">Авторизоваться</button>
