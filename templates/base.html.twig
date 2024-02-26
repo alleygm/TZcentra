@@ -19,6 +19,7 @@
 		<div class="first-wrapper">
 			<div class="header">
 				<h1 class="logo">YouGreen</h1>
+				<h3 id="navBarPageTitle"></h3>
 				<nav class="main-nav">
 					<ul>
 						<li>
@@ -52,6 +53,10 @@
 </html>
 
 <script>
+      var pageTitle = document.title; // Получить заголовок страницы
+      var navBarTitleElement = document.getElementById('navBarPageTitle');
+      navBarTitleElement.innerText = pageTitle; // Отобразить заголовок в меню
+
 	var currentURL = window.location.href;
 	var color = '#9c9c9c';
 	var baseURL = window.location.origin;
@@ -62,7 +67,6 @@
 	} else if (currentURL.includes("login")) {
 		document.getElementById('loginLink').style.backgroundColor = color;
 	}
-	div
 </script>
 <style>
 	.dropDownMenu-content {
@@ -197,3 +201,6 @@
 		border-radius: 10px;
 	}
 </style>
+
+
+

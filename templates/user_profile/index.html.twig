@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title %}Профиль{% endblock %}
 {% block body %}
 	<style>
 		.profile {
@@ -36,43 +37,90 @@
 
 		.profile-info {
 			flex: 2;
-			border-left: 2px solid;
-			padding-left: 10px;
+    		border-left: 2px solid;
+    		padding-left: 10px;
+    		display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		padding: 5px;
+    		align-self: stretch;
+		}
+		.form
+		{
+			display: flex;
+			width: 100%; /* Ширина формы занимает всю доступную ширину */
+		}
+		.form input
+		{
+			background-color: transparent; /* устанавливаем прозрачный цвет фона */
+  			/* border: none; убираем границу */
+  			outline: none; /* убираем обводку при фокусе */
+			font-size: 18px; 
+			padding: 0; 
+			width:95%;
+		}
+		.form text
+		{
+			width: 95%;
 		}
 	</style>
 	<div class="second-wrapper">
 		<div class="profile">
+			{{ form_errors(userForm) }}
+			{{ form_start(userForm) }}
 			<div class="profile-photo">
 				<label for="upload-photo">
 					<img id="user-photo" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Фото Пользователя">
 				</label>
 				<input type="file" id="upload-photo" style="display: none">
-				<button>Изменить данные</button>
-				<button>Удалить</button>
+				{{ form_row(userForm.saveButton) }}
+				<button id="cancelButton" style="display:none">Отмена</button>
+				<button id="deleteButton" style="display:">Удалить</button>
 			</div>
 			<div class="profile-info">
-				<h2>User Name</h2>
-				<p>Email:
-					{{user.Email }}</p>
-				<p>Location: City, Country</p>
-
-				<p>Роль:
-					{% for rol in user.roles %}
-						{{rol}};
-					{% endfor %}
-				</p>
-				<p>Дата регистрации: City, Country</p>
-				<p>Дата рождения: City, Country</p>
-				<p>Описание: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				{{ form_widget(userForm.SecondName)}}
+				{{ form_widget(userForm.FirstName)}}
+				<text>Email:</text>
+				{{ form_widget(userForm.Email) }}
+				<text>Дата регистрации</text>
+				{{ form_widget(userForm.RegisterDate) }}
+				<text>Дата рождения</text>
+				{{ form_widget(userForm.BirthDate) }}
+				<text>Роли: </text>
+				{{ form_widget(userForm.Roles)}}
 			</div>
 		</div>
-	</div>
-	{{ form_errors(userForm) }}
-	{{ form_start(userForm) }}
-	{{ form_row(userForm.Email, { label: ' ' }) }}
-	{{ form_row(userForm.password, { label: ' ' }) }}
-	<ul>
-	<li> {{ form_label(userForm.roles) }} </li> 
-	</ul>
-	{{ form_end(userForm) }}
-</div>{% endblock %}
+		{{ form_end(userForm) }}
+	</div>	
+	<script>
+		let editMode = false;
+		function EditProfile() {
+			let allInput = document.querySelectorAll("input");
+			allInput.forEach(function(input) {
+  			input.removeAttribute("readonly");
+			});
+			console.log(editMode);
+			let editButton = document.getElementById("editButton");
+			let cancelButton = document.getElementById("cancelButton");
+			let deleteButton = document.getElementById("deleteButton");
+			
+			if(editMode == true) 
+			{
+				editButton.innerHTML = "Изменить данные";
+				cancelButton.style.display = "none";
+				deleteButton.style.display = "block"
+				editMode = false;
+				return;
+			}
+			if(editMode == false) 
+			{
+				editButton.innerHTML = "Сохранить";
+				editMode = true;
+				cancelButton.style.display = "block";
+				deleteButton.style.display = "none"
+				return;
+			}
+		}
+		
+	</script>
+{% endblock %}

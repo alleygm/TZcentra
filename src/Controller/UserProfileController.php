@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\UserProfileType;
+use App\Form\UserProfileFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,9 @@ class UserProfileController extends AbstractController
     public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(UserProfileType::class, $user);
+        $form = $this->createForm(UserProfileFormType::class, $user, [
+            'attr' => ['class' => 'form']
+        ]);
         $form->handleRequest($request);
 
       /*   if ($form->isSubmitted() && $form->isValid()) {
