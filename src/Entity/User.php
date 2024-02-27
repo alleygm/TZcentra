@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -31,6 +32,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $SecondName = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $RegisterDate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $BirthDate = null;
 
     public function getId(): ?int
     {
@@ -110,6 +123,59 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getSecondName(): ?string
+    {
+        return $this->SecondName;
+    }
+
+    public function setSecondName(?string $SecondName): static
+    {
+        $this->SecondName = $SecondName;
+
+        return $this;
+    }
+
+    public function getRegisterDate(): ?\DateTimeInterface
+    {
+        return $this->RegisterDate;
+    }
+
+    public function setRegisterDate(?\DateTimeInterface $RegisterDate): static
+    {
+        $this->RegisterDate = $RegisterDate;
+
+        return $this;
+    }
+
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->BirthDate;
+    }
+
+    public function setBirthDate(?\DateTimeInterface $BirthDate): static
+    {
+        $this->BirthDate = $BirthDate;
 
         return $this;
     }
