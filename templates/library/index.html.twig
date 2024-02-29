@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}Библиотека{% endblock %}
+{% block body %}
+<div id="modalContainer"></div>
+    <div class="second-wrapper">
+        <div>
+            <button type="button" onclick="openModalWindow('{{ path('library_book_add') }}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookAddModalWindow">Добавить</button>  
+        </div>
+        {# {% include 'library/bookAddModalWindow.html.twig' %} #}
+        <div>
+            <table class="exampleTable">
+                <thead>
+                    <th>Наименование</th>
+                    <th>Добавил</th>
+                    <th>Начал</th>
+                    <th>Закончил</th>
+                    <th>Статус</th>
+                    <th>Оценка</th>
+                    <th>Скачать</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Гарри Поттер и дары смерти</td>
+                        <td>213123123</td>
+                        <td>123123123</td>
+                        <td>123123123</td>
+                        <td>3123123</td>
+                        <td>3123213</td>
+                        <td><button>Скачать</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        function openModalWindow(url)
+        {
+            if (!document.getElementById(url)) 
+            {
+                fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('modalContainer').innerHTML = data;
+                   $('#'+url.replace(/\//g, "\\/")).modal('show');
+                });
+            }
+            else 
+            {
+                $('#'+url.replace(/\//g, "\\/")).modal('toggle');
+            }
+        }
+    </script>
+{% endblock %}

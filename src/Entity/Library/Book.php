@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Library;
 
-use App\Repository\BookRepository;
+use App\Repository\Library\BookRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
@@ -15,6 +16,9 @@ class Book
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $create_at = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $start_at = null;
@@ -30,6 +34,9 @@ class Book
 
     #[ORM\Column(nullable: true, length: 255)]
     private ?string $source = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
 
     public function getId(): ?int
     {
@@ -107,4 +114,29 @@ class Book
 
         return $this;
     }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(\DateTimeImmutable $create_at): static
+    {
+        $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): static
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+    
 }

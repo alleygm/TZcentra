@@ -6,14 +6,6 @@
 			{% block title %}Welcome!{% endblock %}
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		
-		{% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-		{% endblock %}
-		{% block javascripts %}
-        	{{ encore_entry_script_tags('app') }}
-		{% endblock %}
-
 	</head>
 	<body class="gradient-background">
 		<div class="first-wrapper">
@@ -51,24 +43,8 @@
 		</div>
 	</body>
 </html>
-
-<script>
-      var pageTitle = document.title; // Получить заголовок страницы
-      var navBarTitleElement = document.getElementById('navBarPageTitle');
-      navBarTitleElement.innerText = pageTitle; // Отобразить заголовок в меню
-
-	var currentURL = window.location.href;
-	var color = '#9c9c9c';
-	var baseURL = window.location.origin;
-	if (currentURL.includes("category")) {
-		document.getElementById('categoryLink').style.backgroundColor = color;
-	} else if (currentURL === baseURL + "/") {
-		document.getElementById('mainLink').style.backgroundColor = color;
-	} else if (currentURL.includes("login")) {
-		document.getElementById('loginLink').style.backgroundColor = color;
-	}
-</script>
 <style>
+
 	.dropDownMenu-content {
 		display: none;
 		position: absolute;
@@ -126,7 +102,6 @@
 	.first-wrapper {
 		margin: 0 auto 1em;
 		max-width: 1000px;
-		width: 95%;
 		height: 95%;
 		font: 18px / 1.5 sans-serif;
 		border-radius: 15px;
@@ -179,29 +154,48 @@
 		background-color: #888888; /* Новый цвет фона при наведении */
 	}
 	
-	.exampleTable {
-		width: 95%;
-		text-align: center;
-		 margin: 0 auto;
+	  table {
+		width:95%;
+		height:95%;
 
-		 
+        border-collapse: collapse;
+    }
+	.exampleTable {
+		text-align: center;
+		margin: 0 auto; 
 	}
 	.exampleTable thead th {
 		font-weight: bold;
 		background-color: #ecf9fc;
 		color: #1d253b;
-		border-style: solid;
-		border-width: 1px;
-		border-radius: 10px;
-	}
+		border: 1px solid;
+	}		
+	.exampleTable tbody td {
+        border: 1px solid;
+    }
 
-	.exampleTable th {
-		border-width: 1px;
-		font-weight: normal;
-		border-style: solid;
-		border-radius: 10px;
-	}
 </style>
-
+	{% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+		{% endblock %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('app') }}
+	<script>
+		var pageTitle = document.title; // Получить заголовок страницы
+		var navBarTitleElement = document.getElementById('navBarPageTitle');
+		navBarTitleElement.innerText = pageTitle; // Отобразить заголовок в меню
+		var currentURL = window.location.href;
+		var color = '#9c9c9c';
+		var baseURL = window.location.origin;
+		if (currentURL.includes("category")) {
+				document.getElementById('categoryLink').style.backgroundColor = color;
+		} else if (currentURL === baseURL + "/") {
+				document.getElementById('mainLink').style.backgroundColor = color;
+		} else if (currentURL.includes("login")) {
+				document.getElementById('loginLink').style.backgroundColor = color;
+		}
+		
+	</script>
+{% endblock %}
 
 

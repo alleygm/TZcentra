@@ -7,6 +7,9 @@ import './bootstrap.js';
  */
 import './styles/app.scss'
 
+const $ = require('jquery');
+global.$ = global.jQuery = $;
+
 window.getLocation =function() {
   // Если геолокация поддерживается браузером
   if (navigator.geolocation) {
