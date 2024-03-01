@@ -1,33 +1,33 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Страница Категорий{% endblock %}
+{% block title %}Категории{% endblock %}
 
 {% block body %}
-<style>
-</style>
+	<style></style>
 
-<div>
-    <h1>Товары по категориям</h1>
-{% set counter = 1 %}
-    <text style="margin-left:5px;"> Выберите категорию: </text>
-      <table class="exampleTable">
-  <thead>
-    <tr>
-        <th scope="col">№</th>
-        <th scope="col">Наименование</th>
-    </tr>
-  </thead>
-        {% for cat in category %}
-            <tr>
-            <th>
-                {{ counter }}
-            </th>
-            <th> 
-                <a href="/show/products/by/category/{{cat.getId}}">{{ cat.getName() }}</a>
-            </th>
-            </tr>
-            {% set counter = counter + 1 %}
-        {% endfor %}
-</table>
-</div>
+	<div class="second-wrapper">
+		{% set counter = 1 %}
+		<text>
+			Выберите категорию:
+		</text>
+		<table class="exampleTable">
+			<thead>
+				<tr>
+					<th scope="col">№</th>
+					<th scope="col">Наименование</th>
+				</tr>
+			</thead>
+			{% for cat in category %}
+				<tr>
+					<th>
+						{{ counter }}
+					</th>
+					<th>
+						<a href="/show/products/by/category/{{cat.getId}}">{{ cat.getName() }}</a>
+					</th>
+				</tr>
+				{% set counter = counter + 1 %}
+			{% endfor %}
+		</table>
+	</div>
+{# 	{{ include('user_profile/index.html.twig')}} #}
 {% endblock %}

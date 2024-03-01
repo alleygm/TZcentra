@@ -1,0 +1,5 @@
+Angelica File Module Error Log
+Created(or opened) on 28/01/2024 23:07:05
+
+[23:07:05.451] AFilePackGame::Open(), Can not open file [C:\Users\nikyu\Desktop\Папки\PHP\my_project_directory\public\configs.pck]
+[23:07:05.451] AFilePackMan::OpenFilePackageInGame(), Can not open package [configs.pck]

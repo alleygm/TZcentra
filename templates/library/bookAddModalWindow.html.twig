@@ -1,0 +1,53 @@
+{% block body %}
+    <div class="modal fade" id="{{url}}"> 
+        <div class="modal-dialog modal-lg"> 
+            <div class="modal-content"> 
+                <div class="modal-header"> 
+                    <h5 class="modal-title">Добавить книгу</h5> 
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"> </button> 
+                </div> 
+                <div class="modal-body"> 
+                {{ form_start(form) }}
+                    {{form_row(form.name)}}
+                    {{form_row(form.status, {'attr': {'name': 'statusSelect', 'onchange': 'status(\'' ~ form.status.vars.id ~ '\',\'' ~ form.start_at.vars.id ~ '\',\'' ~ form.end_at.vars.id ~ '\')'}})}}
+                    {{form_row(form.start_at)}}
+                    {{form_row(form.end_at)}}
+                    {{form_row(form.accept)}}
+                {{ form_end(form) }}    
+                </div> 
+            </div> 
+        </div> 
+    </div>
+
+</div> 
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function status(statusId, startAtId, endAtId) 
+        {
+            let status = document.getElementById(statusId).value;
+            let startAt = document.getElementById(startAtId);
+            let endAt = document.getElementById(endAtId);
+            switch (status) {
+                case 'Планирую':
+                    startAt.parentNode.setAttribute('style', 'display:none');
+                    endAt.parentNode.setAttribute('style', 'display:none');
+                break;
+                case 'Прочитал':
+                     console.log(status);
+                    startAt.parentNode.setAttribute('style', 'display:block');
+                    endAt.parentNode.setAttribute('style', 'display:block');
+                break;
+                case 'Читаю':
+                case 'Приостановил':
+                    startAt.parentNode.setAttribute('style', 'display:block');
+                    endAt.parentNode.setAttribute('style', 'display:none');
+                break;
+                default:
+                    startAt.parentNode.setAttribute('style', 'display:block');
+                    endAt.parentNode.setAttribute('style', 'display:block');
+                break;
+            }
+        }
+    </script>
+{% endblock %}
