@@ -1,17 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}Библиотека{% endblock %}
 {% block body %}
-<div id="modalContainer"></div>
     <div class="second-wrapper">
+        <div id="modalContainer"></div>
         <div>
             <button type="button" onclick="openModalWindow('{{ path('library_book_add') }}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookAddModalWindow">Добавить</button>  
-        </div>
-        {# {% include 'library/bookAddModalWindow.html.twig' %} #}
-        <div>
-            <table class="exampleTable">
+
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <th>Наименование</th>
-                    <th>Добавил</th>
                     <th>Начал</th>
                     <th>Закончил</th>
                     <th>Статус</th>
@@ -19,15 +16,24 @@
                     <th>Скачать</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Гарри Поттер и дары смерти</td>
-                        <td>213123123</td>
-                        <td>123123123</td>
-                        <td>123123123</td>
-                        <td>3123123</td>
-                        <td>3123213</td>
-                        <td><button>Скачать</button></td>
-                    </tr>
+                    {% for book in books %}
+                        <tr>
+                            <td>{{book.name}}</td>
+                            <td>{{book.startAt == null ? '---' : book.startAt|date('d-m-Y')}}</td>
+                            <td>{{book.endAt == null ? '---' : book.endAt|date('d-m-Y')}}</td>
+                            <td>{{book.status}}</td>
+                            <td>{{book.score}}</td>
+                            {% if book.source == null %}
+                                <td>
+                                    <button type=""><input type="file" id="upload-photo" style="display: none"></button>
+                                </td>
+                            {% else %} 
+                                <td>
+                                    <button>Скачать</button>
+                                </td>
+                            {% endif %}    
+                        </tr>
+                    {% endfor %}    
                 </tbody>
             </table>
         </div>
@@ -48,9 +54,13 @@
                 })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data);
                     document.getElementById('modalContainer').innerHTML = data;
-                   $('#'+url.replace(/\//g, "\\/")).modal('show');
+                    $('#'+url.replace(/\//g, "\\/")).modal('show');
+                    var scripts = $(data).filter('script');
+                    scripts.each(function() 
+                    {
+                        $('body').append($(this).prop('outerHTML'));
+                    });
                 });
             }
             else 
