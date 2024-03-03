@@ -3,13 +3,17 @@
 namespace App\Controller\Library;
 
 use App\Form\Library\BookAddFormType;
+use App\Form\Library\BookViewFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Library\Book;
 use App\Repository\Library\BookRepository;
+
 
 class Library extends AbstractController
 {
@@ -21,7 +25,6 @@ class Library extends AbstractController
     public function library(Request $request, BookRepository $bookRepository)
     {   
         $books = $bookRepository->findAll();
-        dump($books);
         return $this->render('library/index.html.twig', [
             'books' => $books, 
         ]);
@@ -31,6 +34,10 @@ class Library extends AbstractController
     #[Route('/library/add/book', name: 'library_book_add')]
     public function libraryAdd(Request $request, EntityManagerInterface $entityManager)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return new RedirectResponse('/library');
+        }
+
         $form = $this->createForm(BookAddFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,20 +51,28 @@ class Library extends AbstractController
             $entityManager->persist($newBook);
             $entityManager->flush();
             
-            return $this->redirectToRoute('library_index');
+            return new RedirectResponse('/library');
         }
         // Отправляем HTML-форму в виде ответа
         return $this->render('library/bookAddModalWindow.html.twig', [
             'form' => $form->createView(),
             'url' => $request->getPathInfo(),
         ]);
-        // return $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
-    #[Route('/library/view/book/{id}', name: 'library_view')]
-    public function libraryView(Request $request)
+    #[Route('/library/view/book/{id}', name: 'library_book_view')]
+    public function libraryView(Request $request, $id = null, BookRepository $bookRepository)
     {
-        return $this->render('library/index.html.twig', ['keyHello' => 'hello', 'keyWorld' => 'world']);
+        $book = $bookRepository->findOneBy(['id' => $id]);
+        $viewForm = $this->createForm(BookViewFormType::class, $book);
+        $viewForm->handleRequest($request);
+        if ($viewForm->isSubmitted() && $viewForm->isValid()) {
+
+        }
+        return $this->render('library/bookViewModalWindow.html.twig', [
+            'form' => $viewForm->createView(),
+            'url' => $request->getPathInfo(),
+        ]);
     }
 
 
