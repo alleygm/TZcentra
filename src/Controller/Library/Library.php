@@ -69,6 +69,7 @@ class Library extends AbstractController
         if ($viewForm->isSubmitted() && $viewForm->isValid()) {
 
         }
+        
         return $this->render('library/bookViewModalWindow.html.twig', [
             'form' => $viewForm->createView(),
             'url' => $request->getPathInfo(),

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;  
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +26,7 @@ class BookAddFormType extends AbstractType
         $builder
             ->add('name', TextType::class, 
             [
-                'label' => 'Название',
+                'label' => 'Наименование',
                 'row_attr' => [' class' => 'col-md-4'],
                 'attr' => [' class' => 'w-100'],
                 'required' => true,
@@ -48,6 +49,12 @@ class BookAddFormType extends AbstractType
                 'row_attr' => ['class' => 'col-md-4', 'style' => 'display:none'],
                 'attr' => ['class' => 'w-100'],
                 'required' => false,
+            ])
+            ->add('comment', TextareaType::class, [
+                'label' => 'Комментарий',
+                'row_attr' => ['class' => ''],
+                'attr' => ['class' => 'w-100'],
+               'required' => false,
             ])
             ->add('accept', SubmitType::class, [
                 'label' => 'Добавить',

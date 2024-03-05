@@ -41,12 +41,6 @@
 {% block javascripts %}
     {{parent()}}
     <script>
-    $(document).ready(function() {
-  $('#myTable tr').click(function() {
-    var newRow = '<div style="min-height:100px;"dawdawdawd</div>';
-    $(this).after(newRow).hide().show('slow');
-  });
-});
         function loadModalWindow(url)
         {
             if (!document.getElementById(url)) 

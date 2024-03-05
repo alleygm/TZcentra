@@ -1,6 +1,6 @@
 {% block body %}
     <div class="modal fade" id="{{url}}"> 
-        <div class="modal-dialog modal-lg"> 
+        <div class="modal-dialog modal-lg" name="bookAddModalWindowContent"> 
             <div class="modal-content"> 
                 <div class="modal-header"> 
                     <h5 class="modal-title">Добавить книгу</h5> 
@@ -12,6 +12,7 @@
                     {{form_row(form.status, {'attr': {'name': 'statusSelect', 'onchange': 'status(\'' ~ form.status.vars.id ~ '\',\'' ~ form.start_at.vars.id ~ '\',\'' ~ form.end_at.vars.id ~ '\')'}})}}
                     {{form_row(form.start_at)}}
                     {{form_row(form.end_at)}}
+                    {{form_row(form.comment)}}
                     {{form_row(form.accept)}}
                 {{ form_end(form) }}    
                 </div> 
