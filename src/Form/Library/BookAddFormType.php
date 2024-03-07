@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\LessThan;
 
 class BookAddFormType extends AbstractType
@@ -30,7 +31,14 @@ class BookAddFormType extends AbstractType
                 'row_attr' => [' class' => 'col-md-4'],
                 'attr' => [' class' => 'w-100'],
                 'required' => true,
-                'constraints' => [new Length(['min' => 3])],
+                'constraints' => [ 
+                    new NotBlank(),
+                    new Regex([
+                    'pattern' => '^(?![0-9])',
+                    'message' => 'Ты лох',
+                    ]),
+                ],
+                
             ])
             ->add('status', ChoiceType::class, [
                 'label' => 'Статус',
@@ -54,7 +62,7 @@ class BookAddFormType extends AbstractType
                 'label' => 'Комментарий',
                 'row_attr' => ['class' => ''],
                 'attr' => ['class' => 'w-100'],
-               'required' => false,
+                'required' => false,
             ])
             ->add('accept', SubmitType::class, [
                 'label' => 'Добавить',
@@ -67,7 +75,7 @@ class BookAddFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'attr' => ['class' => 'd-flex flex-column align-items-center', 'action' => '/library/add/book', 'target' => 'dummyframe']
+            'attr' => ['class' => 'd-flex flex-column align-items-center', 'action' => '/library/add/book']
         ]);
     }
 }   

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\MainPage;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,19 +14,10 @@ use Knp\Component\Pager\PaginatorInterface;
 class MainPageController extends AbstractController
 {
     #[Route('/', name: 'main_page')]
-    public function showAllProducts(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
+    public function mainPage(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
     {
-        $productsRepository = $entityManager->getRepository(Product::class);
-        $products = $productsRepository->findAll();
-
-        $pagination = $paginator->paginate(
-            $productsRepository->paginationQuery(),
-            $request->query->get('page', 1),
-            2
-        );
-
+        
         return $this->render('main_page/index.html.twig', [
-            'pagination' => $pagination
         ]);
     }
 }

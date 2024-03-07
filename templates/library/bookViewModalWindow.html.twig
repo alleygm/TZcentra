@@ -1,5 +1,5 @@
 {% block body %}
- <div class="modal fade" id="{{url}}"> 
+<div class="modal fade" id="{{url}}"> 
         <div class="modal-dialog modal-lg"> 
             <div class="modal-content"> 
                 <div class="modal-header"> 
@@ -8,7 +8,7 @@
                 </div> 
                 <div class="modal-body row"> 
                     <div class="col">
-                   
+                
                     </div>
                     <div class="col">
                         {{ form_start(form) }}
@@ -39,7 +39,9 @@
             $("#book_view_form_reset").toggle();
             $("#book_view_form_close").toggle();
             $("#book_view_form_edit").toggle(); // if currently visible
-
+            $('#book_view_form :input:not(:button)').prop('disabled', function(i, val) {
+                return !val;
+            });
         }
     </script>
 {% endblock %}

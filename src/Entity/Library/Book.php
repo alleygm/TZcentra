@@ -2,6 +2,7 @@
 
 namespace App\Entity\Library;
 
+use App\Entity\User;
 use App\Repository\Library\BookRepository;
 use DateTime;
 use DateTimeImmutable;
@@ -40,13 +41,18 @@ class Book
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
 
-    public function __construct(string $name, string $status, DateTime $start_at = null, DateTime $end_at = null)
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    public function __construct(string $name, string $status, DateTime $start_at = null, DateTime $end_at = null, User $user)
     {
         $this->name = $name;
         $this->status = $status;
         $this->create_at = new DateTime();
         $this->start_at = $start_at;
         $this->end_at = $end_at;
+        $this->user = $user;
     }
     public function getId(): ?int
     {
@@ -145,6 +151,18 @@ class Book
     public function setComment(?string $comment): static
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

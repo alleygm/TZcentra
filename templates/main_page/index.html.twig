@@ -4,36 +4,26 @@
 
 	<style></style> 
 	<div class="second-wrapper">
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 		<div>
-			{% set counter = 1 %}
-			<button onclick="getLocation()">Get Location</button>
-			<p id="location"></p>
-			<text>
-				Список всех товаров:</text>
-			<table class="exampleTable">
-				<thead>
-					<tr>
-						<th scope="col">№</th>
-						<th scope="col">Наименование</th>
-						<th scope="col">Категория</th>
-					</tr>
-				</thead>
-				{% for product in pagination %}
-					<tr>
-						<th>
-							{{ counter }}
-						</th>
-						<th>
-							{{ product.getName() }}
-						</th>
-						<th>
-							{{ product.getCategory().getName() }}
-						</th>
-					</tr>
-					{% set counter = counter + 1 %}
-				{% endfor %}
-			</table>
-			{{knp_pagination_render(pagination)}}
+			<div class="row text-center">
+				<p>Добро пожаловать, {{app.user.firstname ~ app.user.secondname}}</p>
+				<p>Вам доступны следующие сервисы:</p>	
+			</div>
+			<div class="d-flex d-flex-row border border-3">
+				<div class="">
+					<a href="/library" class="btn btn-small">Библиотека</a>
+					<a href="/gamelibrary" class="btn btn-small">Игротека</a>
+					<a href="/filmlibrary" class="btn btn-small">Фильмотека</a>
+				</div>
+			</div>
 		</div>
+		
+	{% else %}	
+		<div class="text-center">
+			<p>Для работы с сайтом необходимо авторизоваться</p>
+			<a class="btn btn-small" href="/login">Авторизация</a>
+        </div>
+	{% endif %}	
 	</div>
 {% endblock %}

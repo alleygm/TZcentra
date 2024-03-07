@@ -15,11 +15,11 @@ use App\Entity\Library\Book;
 use App\Repository\Library\BookRepository;
 
 
-class Library extends AbstractController
+class LibraryController extends AbstractController
 {
     public function __construct()
     {
-
+        
     }
     #[Route('/library', name: 'library_index')]
     public function library(Request $request, BookRepository $bookRepository)
@@ -34,10 +34,6 @@ class Library extends AbstractController
     #[Route('/library/add/book', name: 'library_book_add')]
     public function libraryAdd(Request $request, EntityManagerInterface $entityManager)
     {
-        if (!$request->isXmlHttpRequest()) {
-            return new RedirectResponse('/library');
-        }
-
         $form = $this->createForm(BookAddFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,8 +42,8 @@ class Library extends AbstractController
             $bookStatus = $formData['status'];
             $bookStartAt = $formData['start_at'];
             $bookEndAt = $formData['end_at'];
-
-            $newBook = new Book($bookName, $bookStatus, $bookStartAt, $bookEndAt);
+            $user = $this->getUser();
+            $newBook = new Book($bookName, $bookStatus, $bookStartAt, $bookEndAt, $user);
             $entityManager->persist($newBook);
             $entityManager->flush();
             
@@ -67,7 +63,7 @@ class Library extends AbstractController
         $viewForm = $this->createForm(BookViewFormType::class, $book);
         $viewForm->handleRequest($request);
         if ($viewForm->isSubmitted() && $viewForm->isValid()) {
-
+        
         }
         
         return $this->render('library/bookViewModalWindow.html.twig', [
