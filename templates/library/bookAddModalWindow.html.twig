@@ -9,6 +9,7 @@
                 <div class="modal-body"> 
                 {{ form_start(form) }}
                     {{form_row(form.name)}}
+                    {{form_row(form.author)}}
                     {{form_row(form.status, {'attr': {'name': 'statusSelect', 'onchange': 'status(\'' ~ form.status.vars.id ~ '\',\'' ~ form.start_at.vars.id ~ '\',\'' ~ form.end_at.vars.id ~ '\')'}})}}
                     {{form_row(form.start_at)}}
                     {{form_row(form.end_at)}}
@@ -35,7 +36,6 @@
                     endAt.parentNode.setAttribute('style', 'display:none');
                 break;
                 case 'Прочитал':
-                     console.log(status);
                     startAt.parentNode.setAttribute('style', 'display:block');
                     endAt.parentNode.setAttribute('style', 'display:block');
                 break;

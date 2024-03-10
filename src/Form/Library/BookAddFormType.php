@@ -33,13 +33,10 @@ class BookAddFormType extends AbstractType
                 'required' => true,
                 'constraints' => [ 
                     new NotBlank(),
-                    new Regex([
-                    'pattern' => '^(?![0-9])',
-                    'message' => 'Ты лох',
-                    ]),
                 ],
                 
             ])
+            ->add('author', TextType::class, ['label' => 'Автор', 'row_attr' => [' class' => 'col-md-4']])
             ->add('status', ChoiceType::class, [
                 'label' => 'Статус',
                 'row_attr' => [' class' => 'col-md-4'],

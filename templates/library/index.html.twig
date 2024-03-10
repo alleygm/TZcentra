@@ -9,6 +9,7 @@
         <table  id="myTable" class="table table-striped table-bordered table-hover">
             <thead>
                 <th>Наименование</th>
+                <th>Автор</th>
                 <th>Начал</th>
                 <th>Закончил</th>
                 <th>Статус</th>
@@ -19,6 +20,7 @@
                 {% for book in books %}
                     <tr onclick="loadModalWindow('{{ path('library_book_view', {'id': book.id}) }}')">
                         <td>{{book.name}}</td>
+                        <td>{{book.author == null ? '---' : book.author}}</td>
                         <td>{{book.startAt == null ? '---' : book.startAt|date('d-m-Y')}}</td>
                         <td>{{book.endAt == null ? '---' : book.endAt|date('d-m-Y')}}</td>
                         <td>{{book.status}}</td>

@@ -10,7 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;  
+use Symfony\Component\Form\Extension\Core\Type\NumberType;  
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,35 +28,42 @@ class BookViewFormType extends AbstractType
     {
         
         $builder
+            ->add('id', HiddenType::class)
             ->add('name', TextType::class, 
             [
                 'label' => 'Наименование',
                 'row_attr' => [' class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
+                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
+            ])
+            ->add('author', TextType::class, [
+                'label' => 'Автор', 
+                'row_attr' => [' class' => 'w-100'],
+                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
+                'required' => false,
             ])
             ->add('status', ChoiceType::class, [
                 'label' => 'Статус',
                 'row_attr' => [' class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
+                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
                 'choices' => ['Планирую' => 'Планирую', 'Прочитал' => 'Прочитал', 'Читаю' => 'Читаю', 'Приостановил' => 'Приостановил'],
                 'required' => false,
             ])
             ->add('start_at', DateType::class, [
                 'label' => 'Начал',
                 'row_attr' => ['class' => 'w-100'],
-                'attr' => ['class' => 'w-100', 'disabled' => 'true'],
+                'attr' => ['class' => 'w-100', 'readonly' => 'true'],
                 'required' => false,
             ])
             ->add('end_at', DateType::class, [
                 'label' => 'Закончил',
                 'row_attr' => ['class' => 'w-100'],
-                'attr' => ['class' => 'w-100', 'disabled' => 'true'],
+                'attr' => ['class' => 'w-100', 'readonly' => 'true'],
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Комментарий',
                 'row_attr' => ['class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
+                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
@@ -83,7 +92,7 @@ class BookViewFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'attr' => ['class' => 'd-flex flex-column align-items-center', 'action' => '/library', 'id' => 'book_view_form']
+            'attr' => ['class' => 'd-flex flex-column align-items-center', 'action' => '/library/edit/book']
         ]);
     }
 }   

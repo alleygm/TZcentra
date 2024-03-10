@@ -45,6 +45,9 @@ class Book
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $author = null;
+
     public function __construct(string $name, string $status, DateTime $start_at = null, DateTime $end_at = null, User $user)
     {
         $this->name = $name;
@@ -163,6 +166,18 @@ class Book
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

@@ -25,6 +25,7 @@ class LibraryController extends AbstractController
     public function library(Request $request, BookRepository $bookRepository)
     {   
         $books = $bookRepository->findAll();
+        dump($books);
         return $this->render('library/index.html.twig', [
             'books' => $books, 
         ]);
@@ -61,20 +62,22 @@ class LibraryController extends AbstractController
     {
         $book = $bookRepository->findOneBy(['id' => $id]);
         $viewForm = $this->createForm(BookViewFormType::class, $book);
-        $viewForm->handleRequest($request);
-        if ($viewForm->isSubmitted() && $viewForm->isValid()) {
-        
-        }
         
         return $this->render('library/bookViewModalWindow.html.twig', [
             'form' => $viewForm->createView(),
             'url' => $request->getPathInfo(),
         ]);
     }
+    #[Route('/library/edit/book', name: 'library_book_edit')]
+    public function libraryEdit(Request $request, BookRepository $bookRepository, EntityManagerInterface $entityManager)
+    {
+        $viewForm = $this->createForm(BookViewFormType::class);
+        $viewForm->handleRequest($request);
+        dump($request);
+        dump($viewForm->getData());
 
-
-
-
+        return new RedirectResponse('/library');
+    }
 
 
 
