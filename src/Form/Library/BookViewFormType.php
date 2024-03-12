@@ -33,37 +33,37 @@ class BookViewFormType extends AbstractType
             [
                 'label' => 'Наименование',
                 'row_attr' => [' class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
+                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
             ])
             ->add('author', TextType::class, [
                 'label' => 'Автор', 
                 'row_attr' => [' class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
+                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
                 'required' => false,
             ])
             ->add('status', ChoiceType::class, [
                 'label' => 'Статус',
                 'row_attr' => [' class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
+                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
                 'choices' => ['Планирую' => 'Планирую', 'Прочитал' => 'Прочитал', 'Читаю' => 'Читаю', 'Приостановил' => 'Приостановил'],
                 'required' => false,
             ])
             ->add('start_at', DateType::class, [
                 'label' => 'Начал',
                 'row_attr' => ['class' => 'w-100'],
-                'attr' => ['class' => 'w-100', 'readonly' => 'true'],
+                'attr' => ['class' => 'w-100', 'disabled' => 'true'],
                 'required' => false,
             ])
             ->add('end_at', DateType::class, [
                 'label' => 'Закончил',
                 'row_attr' => ['class' => 'w-100'],
-                'attr' => ['class' => 'w-100', 'readonly' => 'true'],
+                'attr' => ['class' => 'w-100', 'disabled' => 'true'],
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Комментарий',
                 'row_attr' => ['class' => 'w-100'],
-                'attr' => [' class' => 'w-100', 'readonly' => 'true'],
+                'attr' => [' class' => 'w-100', 'disabled' => 'true'],
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
@@ -92,7 +92,7 @@ class BookViewFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'attr' => ['class' => 'd-flex flex-column align-items-center', 'action' => '/library/edit/book']
+            'attr' => ['class' => 'd-flex flex-column align-items-center', 'action' => '/library/edit/book', 'id' => 'library_edit_book_form']
         ]);
     }
 }   

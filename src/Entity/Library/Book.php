@@ -48,13 +48,15 @@ class Book
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $author = null;
 
-    public function __construct(string $name, string $status, DateTime $start_at = null, DateTime $end_at = null, User $user)
+    public function __construct(string $name, string $author, string $status, DateTime $start_at = null, DateTime $end_at = null, string $comment, User $user)
     {
         $this->name = $name;
+        $this->author = $author;
         $this->status = $status;
         $this->create_at = new DateTime();
         $this->start_at = $start_at;
         $this->end_at = $end_at;
+        $this->comment = $comment;
         $this->user = $user;
     }
     public function getId(): ?int
@@ -79,7 +81,7 @@ class Book
         return $this->start_at;
     }
 
-    public function setStartAt(\DateTime $start_at): static
+    public function setStartAt(?\DateTime $start_at): static
     {
         $this->start_at = $start_at;
 
@@ -91,7 +93,7 @@ class Book
         return $this->end_at;
     }
 
-    public function setEndAt(\DateTime $end_at): static
+    public function setEndAt(?\DateTime $end_at): static
     {
         $this->end_at = $end_at;
 

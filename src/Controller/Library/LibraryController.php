@@ -32,19 +32,21 @@ class LibraryController extends AbstractController
     }
 
 
-    #[Route('/library/add/book', name: 'library_book_add')]
-    public function libraryAdd(Request $request, EntityManagerInterface $entityManager)
+    #[Route('/library/add/book', name: 'library_add_book')]
+    public function libraryAddBook(Request $request, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(BookAddFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $bookName = $formData['name'];
+            $bookAuthor = $formData['author'];
             $bookStatus = $formData['status'];
             $bookStartAt = $formData['start_at'];
             $bookEndAt = $formData['end_at'];
+            $bookComment = $formData['comment'];
             $user = $this->getUser();
-            $newBook = new Book($bookName, $bookStatus, $bookStartAt, $bookEndAt, $user);
+            $newBook = new Book($bookName, $bookAuthor, $bookStatus, $bookStartAt, $bookEndAt, $bookComment, $user);
             $entityManager->persist($newBook);
             $entityManager->flush();
             
@@ -57,8 +59,8 @@ class LibraryController extends AbstractController
         ]);
     }
 
-    #[Route('/library/view/book/{id}', name: 'library_book_view')]
-    public function libraryView(Request $request, $id = null, BookRepository $bookRepository)
+    #[Route('/library/view/book/{id}', name: 'library_view_book')]
+    public function libraryViewBook(Request $request, $id = null, BookRepository $bookRepository)
     {
         $book = $bookRepository->findOneBy(['id' => $id]);
         $viewForm = $this->createForm(BookViewFormType::class, $book);
@@ -68,13 +70,31 @@ class LibraryController extends AbstractController
             'url' => $request->getPathInfo(),
         ]);
     }
-    #[Route('/library/edit/book', name: 'library_book_edit')]
-    public function libraryEdit(Request $request, BookRepository $bookRepository, EntityManagerInterface $entityManager)
+    #[Route('/library/edit/book', name: 'library_edit_book')]
+    public function libraryEditBook(Request $request, BookRepository $bookRepository, EntityManagerInterface $entityManager)
     {
         $viewForm = $this->createForm(BookViewFormType::class);
         $viewForm->handleRequest($request);
-        dump($request);
-        dump($viewForm->getData());
+        if ($viewForm->isSubmitted() && $viewForm->isValid()) {
+        
+            $formData = $viewForm->getData();
+            $book = $bookRepository->findOneBy(['id' => $formData['id']]);
+            $book->setName($formData['name']);
+            $book->setAuthor($formData['author']);
+            $book->setStatus($formData['status']);
+            $book->setStartAt($formData['start_at']);
+            $book->setEndAt($formData['end_at']);
+            $book->setComment($formData['comment']);
+            $entityManager->flush();
+            return new RedirectResponse('/library');
+        }
+
+        return new RedirectResponse('/library');
+    }
+
+    #[Route('/library/delete/book', name: 'library_delete_book')]
+    public function libraryDeleteBook(Request $request, BookRepository $bookRepository, EntityManagerInterface $entityManager)
+    {
 
         return new RedirectResponse('/library');
     }

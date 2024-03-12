@@ -10,7 +10,7 @@
                 {{ form_start(form) }}
                     {{form_row(form.name)}}
                     {{form_row(form.author)}}
-                    {{form_row(form.status, {'attr': {'name': 'statusSelect', 'onchange': 'status(\'' ~ form.status.vars.id ~ '\',\'' ~ form.start_at.vars.id ~ '\',\'' ~ form.end_at.vars.id ~ '\')'}})}}
+                    {{form_row(form.status, {'attr': {'name': 'statusSelect', 'onchange': 'bookAddModalWindowStatus(\'' ~ form.status.vars.id ~ '\',\'' ~ form.start_at.vars.id ~ '\',\'' ~ form.end_at.vars.id ~ '\')'}})}}
                     {{form_row(form.start_at)}}
                     {{form_row(form.end_at)}}
                     {{form_row(form.comment)}}
@@ -25,7 +25,7 @@
 {% endblock %}
 {% block javascripts %}
     <script>
-        function status(statusId, startAtId, endAtId) 
+        function bookAddModalWindowStatus(statusId, startAtId, endAtId) 
         {
             let status = document.getElementById(statusId).value;
             let startAt = document.getElementById(startAtId);
