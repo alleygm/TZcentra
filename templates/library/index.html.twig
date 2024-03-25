@@ -41,12 +41,43 @@
             </tbody>
         </table>
     </div>
+    <div class="context-menu">
+        <ul>
+            <li id="deleteOption">Удалить</li>
+            <!-- Другие опции контекстного меню могут быть добавлены здесь -->
+        </ul>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{parent()}}
     <script>
+        $(document).ready(function(){
+        // Показываем контекстное меню при нажатии ПКМ на строку
+        $("tr").on("contextmenu", function(event) {
+        event.preventDefault(); // Предотвращаем появление стандартного контекстного меню браузера
+        $(this).find("input[type='checkbox']").prop('checked', true); // Выбираем текущую строку
+        
+        // Позиционируем контекстное меню рядом с указателем мыши
+        $(".context-menu").css({
+            top: event.pageY,
+            left: event.pageX
+        }).show();
+        
+        // Обработчик события нажатия на пункт "Удалить" контекстного меню
+        $(".context-menu #deleteOption").click(function(){
+            $(this).closest("tr").remove(); // Удаляем текущую строку таблицы
+            $(".context-menu").hide(); // Скрываем контекстное меню после удаления
+        });
+    });
+    
+    // Скрываем контекстное меню при клике где-либо за его пределами
+    $(document).on("click", function(){
+        $(".context-menu").hide();
+    });
+});
         function libraryBookDeleteMode()
         {
+            
             console.log('IN PROGRESS');
         }
         function loadModalWindow(url)
